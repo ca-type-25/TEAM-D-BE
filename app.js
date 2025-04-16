@@ -1,4 +1,3 @@
-const userRoutes = require('./ApiRoutes/users')
 
 console.log('veikia....')
 
@@ -13,6 +12,8 @@ const cors = require('cors')
 const app = express()
 app.use(express.json())
 app.use(cors())
+
+const userRoutes = require('./ApiRoutes/users')
 app.use('/api/users', userRoutes)
 
 
