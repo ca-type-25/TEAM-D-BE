@@ -11,6 +11,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+
 const activitiesRouter = require('./ApiRoutes/activities')
 const countriesRouter = require('./ApiRoutes/countries')
 
@@ -20,6 +21,10 @@ app.use('/api/activities', activitiesRouter)
 app.use('/api/countries', countriesRouter)
 
 
+
+
+const tripAPIRoutes = require('./ApiRoutes/trips')
+app.use('/api/trips', tripAPIRoutes)
 
 
 const PORT = process.env.PORT || 3000
