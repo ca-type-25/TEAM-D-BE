@@ -1,13 +1,14 @@
-const express = require("express");
-require("dotenv").config();
+const express = require('express')
 const process = require("process");
-require("./db");
-
-const cors = require("cors");
-
+const cors = require('cors')
 const app = express();
+require('dotenv').config()
+require('./db')
+
+
 app.use(express.json());
 app.use(cors());
+
 
 // ROUTES
 const tripAPIRoutes = require("./ApiRoutes/trips");
@@ -17,12 +18,23 @@ const destinationAPIRoutes = require("./ApiRoutes/destinations");
 const userRoutes = require('./ApiRoutes/users')
 app.use('/api/users', userRoutes)
 
+
+const activitiesRouter = require('./ApiRoutes/activities')
+const countriesRouter = require('./ApiRoutes/countries')
+
+
+
+app.use('/api/activities', activitiesRouter)
+app.use('/api/countries', countriesRouter)
+
+
 const tripAPIRoutes = require('./ApiRoutes/trips')
 app.use('/api/trips', tripAPIRoutes)
 
-app.use("/api/trips", tripAPIRoutes);
+
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
+
+
 app.use("/api/destinations", destinationAPIRoutes);
 
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
