@@ -23,6 +23,8 @@ app.use('/api/users', userRoutes)
 app.use('/api/activities', activitiesRouter)
 app.use('/api/countries', countriesRouter)
 
+// const rolesMiddleware = require('./middlewares/rolesMiddleware')
+// const ROLES = require('./config/roles')
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
