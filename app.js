@@ -13,8 +13,16 @@ app.use(cors());
 const tripAPIRoutes = require("./ApiRoutes/trips");
 const destinationAPIRoutes = require("./ApiRoutes/destinations");
 
+
+const userRoutes = require('./ApiRoutes/users')
+app.use('/api/users', userRoutes)
+
+const tripAPIRoutes = require('./ApiRoutes/trips')
+app.use('/api/trips', tripAPIRoutes)
+
 app.use("/api/trips", tripAPIRoutes);
 app.use("/api/destinations", destinationAPIRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
