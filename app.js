@@ -16,12 +16,14 @@ const destinationAPIRoutes = require('./ApiRoutes/destinations')
 const activitiesRouter = require('./ApiRoutes/activities')
 const countriesRouter = require('./ApiRoutes/countries')
 const userRoutes = require('./ApiRoutes/users')
+const categoryAPIRoutes = require('./ApiRoutes/categories')
 
 app.use('/api/destinations', destinationAPIRoutes)
 app.use('/api/trips', tripAPIRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/activities', activitiesRouter)
 app.use('/api/countries', countriesRouter)
+app.use('/api/categories', categoryAPIRoutes)
 
 
 const PORT = process.env.PORT || 3000
