@@ -6,11 +6,6 @@ const tripsSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    category: {
-        type: String,
-        required: true,
-        trim: true
-    },
     description: {
         type: String,
         required: true
@@ -20,12 +15,22 @@ const tripsSchema = new mongoose.Schema({
         min: 0,
         trim: true,
         required: true
-
+        
     },
-    users: {
-        type: [mongoose.Schema.Types.ObjectId],
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        trim: true
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',
         required: true,
+        trim: true
+    },
+    destination: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Destination',
         trim: true
     }
 }, { timestamps: true })
