@@ -27,9 +27,14 @@ async function getDestinationById(req, res) {
 // POST create destination
 async function createDestination(req, res) {
   try {
+    if (!req.body.name || !req.body.country || !req.body.location) {
+      return res.status(400).send({ error: "Missing required fields" });
+    }
+
     const destination = new Destination(req.body);
     await destination.save();
-    res.send(destination);
+
+    res.status(201).send(destination);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -39,12 +44,20 @@ async function createDestination(req, res) {
 async function updateDestination(req, res) {
   try {
     const { id } = req.params;
+    if (!req.body.name && !req.body.location && !req.body.country) {
+      return res
+        .status(400)
+        .send({ error: "At least one field must be provided" });
+    }
+
     const updated = await Destination.findByIdAndUpdate(id, req.body, {
       new: true,
-    });
+    }).populate("country");
+
     if (!updated) {
       return res.status(404).send({ error: "Destination not found" });
     }
+
     res.send(updated);
   } catch (error) {
     res.status(500).send(error);
