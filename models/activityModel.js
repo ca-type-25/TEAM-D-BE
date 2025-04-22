@@ -23,11 +23,12 @@ const activitySchema = new mongoose.Schema({
       minLength: 10,
       maxLength: 100
     },
-    destinationId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Destination',
-      required: true
-    }
+    destinationIds: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Destination",
+      },
+    ],
   }, { timestamps: true })
 
   const Activity = mongoose.model('Activity', activitySchema)
