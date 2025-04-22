@@ -7,10 +7,14 @@ const destinationSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    country: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Country",
+    location: {
+      type: String,
       required: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+      trim: true,
     },
     geolocation: {
       longitude: {
@@ -22,9 +26,16 @@ const destinationSchema = new mongoose.Schema(
         required: true,
       },
     },
-    description: {
-      type: String,
-      trim: true,
+    country: {
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Country",
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
     },
   },
   { timestamps: true }
