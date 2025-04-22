@@ -78,10 +78,26 @@ async function deleteTrip(req, res) {
     }
 }
 
+async function getMyTrips(req,res) {
+    try{
+        const trips = await Trip.find({user: "680763a0e6fb7462e0171a0a"})
+        .populate('category')
+        .populate('destination')
+        .populate('user', 'name')
+        console.log(trips)
+
+        res.send(trips)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+}
+
+
 module.exports = {
     getTrips,
     getTripById,
     createTrip,
     updateTrip,
-    deleteTrip
+    deleteTrip,
+    getMyTrips
 }
