@@ -48,18 +48,22 @@ const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' })
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-        email: user.email,
-        role: user.role
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    )
-
-    res.json({ message: 'Logged in successfully', token })
-  } catch (error) {
+      const token = jwt.sign(
+        {
+          id: user._id,
+          email: user.email,
+          role: user.role
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      )
+      
+      res.json({ 
+        message: 'Logged in successfully', 
+        token,
+        id: user._id
+      })
+     } catch (error) {
     res.status(500).json({ error: 'Login failed', details: error.message })
   }
 };
@@ -85,8 +89,39 @@ const updateUser = async (req, res) => {
   }
 }
 
+const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select('-password')
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+    res.json(user)
+  } catch (error) {
+    res.status(500).json({ error: 'Something went wrong', details: error.message })
+  }
+}
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params
+    const deleted = await User.findByIdAndDelete(id)
+
+    if (!deleted) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    res.json({ message: 'User deleted successfully' })
+  } catch (error) {
+    res.status(500).json({ error: 'Delete failed', details: error.message })
+  }
+}
+
+
+
 module.exports = {
   register,
   login,
-  updateUser
+  updateUser,
+  getUserById,
+  deleteUser
 }
