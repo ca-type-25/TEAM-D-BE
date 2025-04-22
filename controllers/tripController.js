@@ -3,6 +3,10 @@ const Trip = require('../models/tripModel')
 async function getTrips(req, res) {
     try {
         const trips = await Trip.find()
+        .populate('category', 'name')
+        .populate('user', 'name surname')
+        .populate('destination', 'name')
+            
         res.send(trips)
     } catch (error) {
         res.status(500).send(error)
@@ -13,6 +17,9 @@ async function getTripById(req, res) {
     try {
         const { id } = req.params
         const trip = await Trip.findById(id)
+        .populate('category', 'name')
+        .populate('user', 'name surname')
+        .populate('destination', 'name')
 
         if (!trip) {
             return res.status(404).send({ error: 'Trip is not found!'})
@@ -25,7 +32,10 @@ async function getTripById(req, res) {
 
 async function createTrip(req, res) {
     try {
-        const trip = new Trip(req.body)
+        const trip = new Trip({
+            ...req.body,
+            user: '68076427e6fb7462e0171a0f'
+        })
         await trip.save()
 
         res.send(trip)
