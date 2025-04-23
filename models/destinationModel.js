@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const destinationSchema = new mongoose.Schema(
   {
@@ -7,28 +7,31 @@ const destinationSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    country: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Country",
-      required: true,
+    description: {
+      type: String,
+      trim: true,
     },
     geolocation: {
       longitude: {
         type: Number,
         required: true,
+        min: -180,
+        max: 180,
       },
       latitude: {
         type: Number,
         required: true,
+        min: -90,
+        max: 90,
       },
     },
-    description: {
+    country: {
       type: String,
-      trim: true,
+      required: true,
     },
   },
   { timestamps: true }
-);
+)
 
 const Destination = mongoose.model("Destination", destinationSchema);
 module.exports = Destination;
