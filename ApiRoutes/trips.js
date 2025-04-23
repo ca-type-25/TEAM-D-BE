@@ -4,10 +4,10 @@ const authMiddleware = require('../middlewares/authMiddleware')
 
 const router = express.Router()
 
-router.get('/my-trips', getMyTrips)
+router.get('/my-trips', authMiddleware, getMyTrips)
 router.get('/', getTrips)
 router.get('/:id', getTripById)
-router.post('/', createTrip)
+router.post('/', authMiddleware, createTrip)
 router.put('/:id', updateTrip)
 router.delete('/:id', deleteTrip)
 

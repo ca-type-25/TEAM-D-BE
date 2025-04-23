@@ -32,9 +32,10 @@ async function getTripById(req, res) {
 
 async function createTrip(req, res) {
     try {
+        
         const trip = new Trip({
             ...req.body,
-            user: '68076427e6fb7462e0171a0f'
+            user: req.user.id
         })
         await trip.save()
 
@@ -80,11 +81,10 @@ async function deleteTrip(req, res) {
 
 async function getMyTrips(req,res) {
     try{
-        const trips = await Trip.find({user: "680763a0e6fb7462e0171a0a"})
+        const trips = await Trip.find({user: req.user.id})
         .populate('category')
         .populate('destination')
         .populate('user', 'name')
-        console.log(trips)
 
         res.send(trips)
     } catch (error) {
