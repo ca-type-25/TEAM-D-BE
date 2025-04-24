@@ -20,6 +20,7 @@ async function getTripById(req, res) {
         .populate('category', 'name')
         .populate('user', 'name surname')
         .populate('destination', 'name')
+        .populate('activities')
 
         if (!trip) {
             return res.status(404).send({ error: 'Trip is not found!'})
