@@ -7,11 +7,6 @@ const destinationSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    location: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     description: {
       type: String,
       trim: true,
@@ -20,22 +15,19 @@ const destinationSchema = new mongoose.Schema(
       longitude: {
         type: Number,
         required: true,
+        min: -180,
+        max: 180,
       },
       latitude: {
         type: Number,
         required: true,
+        min: -90,
+        max: 90,
       },
     },
     country: {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Country",
-        required: true,
-      },
-      name: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

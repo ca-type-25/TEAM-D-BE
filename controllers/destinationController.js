@@ -1,10 +1,12 @@
 const Destination = require("../models/destinationModel");
-const Country = require("../models/countryModel");
+
+// IŠTRINTAS ŠIS IMPORTAS:
+// const Country = require("../models/countryModel");
 
 // GET all destinations
 async function getDestinations(req, res) {
   try {
-    const { page = 1, limit = 15, sort = "country.name" } = req.query;
+    const { page = 1, limit = 15, sort = "country" } = req.query; // Pakeista sort reikšmė į "country" (dabar string)
 
     const destinations = await Destination.find()
       .sort(sort)
@@ -34,22 +36,19 @@ async function getDestinationById(req, res) {
 // POST create destination
 async function createDestination(req, res) {
   try {
-    const { name, location, description, geolocation, countryName } = req.body;
+    const { name, description, geolocation, country } = req.body; // Pakeista: `countryName` → `country`, ir nebenaudojam Country.findOne
 
-    const country = await Country.findOne({ name: countryName });
-    if (!country) {
-      return res.status(404).send({ error: "Country not found" });
-    }
+    // IŠTRINTA:
+    // const country = await Country.findOne({ name: countryName });
+    // if (!country) {
+    //   return res.status(404).send({ error: "Country not found" });
+    // }
 
     const destination = new Destination({
       name,
-      location,
       description,
       geolocation,
-      country: {
-        _id: country._id,
-        name: country.name,
-      },
+      country, // Tiesiogiai įrašom string
     });
 
     await destination.save();
