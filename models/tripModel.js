@@ -20,11 +20,12 @@ const tripsSchema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        trim: true
+        trim: true,
+        ref: 'Category'
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',
+        ref: 'User',
         required: true,
         trim: true
     },
@@ -32,7 +33,7 @@ const tripsSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Destination',
         trim: true
-    }
+    },
 }, { timestamps: true })
 
 const Trip = mongoose.model('Trip', tripsSchema)
