@@ -6,7 +6,7 @@ const Destination = require("../models/destinationModel");
 // GET all destinations
 async function getDestinations(req, res) {
   try {
-    const { page = 1, limit = 15, sort = "country" } = req.query; // Pakeista sort reikšmė į "country" (dabar string)
+    const { page = 1, limit = 15, sort = "country" } = req.query; // Pakeista sort reikšmė į "country" (dab string)
 
     const destinations = await Destination.find()
       .sort(sort)
