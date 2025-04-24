@@ -79,9 +79,15 @@ async function deleteTrip(req, res) {
             return res.status(404).send({error: 'Trip is not found'})
         }
 
-        res.send('Deleted Trip -', deletedTrip)
+        res.status(200).send({
+            message: 'Trip deleted successfully',
+            trip: deletedTrip,
+        })
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).send({
+            error: 'Internal Server Error',
+            details: error.message,
+        })
     }
 }
 
