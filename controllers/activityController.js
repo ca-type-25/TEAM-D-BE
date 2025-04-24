@@ -1,10 +1,9 @@
-const mongoose = require('mongoose')
-const Activity = require('../models/activityModel')
 
+const Activity = require('../models/activityModel')
 
 const getActivities = async (req, res) => {
     try {
-        const activities = await Activity.find() 
+        const activities = await Activity.find().populate('destinationIds')
         res.send(activities)
 
     } catch (error) {
@@ -15,15 +14,10 @@ const getActivities = async (req, res) => {
 const getActivityId = async (req, res) => {
     try {
       const { id } = req.params
+
+      const activity = await Activity.findById(id).populate('destinationIds')
   
-      if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).send({ error: 'Invalid activity ID' })
-      }
-  
-  
-      const activity = await Activity.findById(id)
-  
-      if (activity.length === 0) {
+      if (!activity) {
         return res.status(404).send({ error: 'Activity not found' })
       }
   

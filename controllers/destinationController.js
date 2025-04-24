@@ -1,9 +1,16 @@
 const Destination = require("../models/destinationModel");
+const Country = require("../models/countryModel");
 
 // GET all destinations
 async function getDestinations(req, res) {
   try {
-    const destinations = await Destination.find().populate("country");
+    const { page = 1, limit = 15, sort = "country.name" } = req.query;
+
+    const destinations = await Destination.find()
+      .sort(sort)
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
+
     res.send(destinations);
   } catch (error) {
     res.status(500).send(error);
@@ -14,7 +21,7 @@ async function getDestinations(req, res) {
 async function getDestinationById(req, res) {
   try {
     const { id } = req.params;
-    const destination = await Destination.findById(id).populate("country");
+    const destination = await Destination.findById(id);
     if (!destination) {
       return res.status(404).send({ error: "Destination not found" });
     }
@@ -27,7 +34,24 @@ async function getDestinationById(req, res) {
 // POST create destination
 async function createDestination(req, res) {
   try {
-    const destination = new Destination(req.body);
+    const { name, location, description, geolocation, countryName } = req.body;
+
+    const country = await Country.findOne({ name: countryName });
+    if (!country) {
+      return res.status(404).send({ error: "Country not found" });
+    }
+
+    const destination = new Destination({
+      name,
+      location,
+      description,
+      geolocation,
+      country: {
+        _id: country._id,
+        name: country.name,
+      },
+    });
+
     await destination.save();
     res.send(destination);
   } catch (error) {
