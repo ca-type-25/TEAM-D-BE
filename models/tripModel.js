@@ -33,7 +33,7 @@ const tripsSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Destination',
         trim: true
-    }
+    },
 }, { timestamps: true })
 
 const Trip = mongoose.model('Trip', tripsSchema)

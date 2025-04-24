@@ -1,4 +1,5 @@
 const Trip = require('../models/tripModel')
+const Activity = require('../models/activityModel')
 
 async function getTrips(req, res) {
     try {
@@ -20,12 +21,16 @@ async function getTripById(req, res) {
         .populate('category', 'name')
         .populate('user', 'name surname')
         .populate('destination', 'name')
-        .populate('activities')
 
         if (!trip) {
             return res.status(404).send({ error: 'Trip is not found!'})
         }
-        res.send(trip)
+
+        const activities = await Activity.find({
+            destinationIds: { $in: trip.destination }
+        })
+
+        res.send( {trip, activities} )
     } catch (error) {
         res.status(500).send(error)
     }
