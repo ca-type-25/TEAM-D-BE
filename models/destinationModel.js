@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const destinationSchema = new mongoose.Schema(
   {
@@ -31,7 +31,7 @@ const destinationSchema = new mongoose.Schema(
     },
   },
   { timestamps: true }
-);
+)
 
 const Destination = mongoose.model("Destination", destinationSchema);
 module.exports = Destination;
