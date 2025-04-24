@@ -4,7 +4,6 @@ const Activity = require('../models/activityModel')
 async function getTrips(req, res) {
     try {
         const trips = await Trip.find()
-        .populate('category', 'name')
         .populate('user', 'name surname')
         .populate('destination', 'name')
             
@@ -18,7 +17,6 @@ async function getTripById(req, res) {
     try {
         const { id } = req.params
         const trip = await Trip.findById(id)
-        .populate('category', 'name')
         .populate('user', 'name surname')
         .populate('destination', 'name')
 
@@ -94,7 +92,6 @@ async function deleteTrip(req, res) {
 async function getMyTrips(req,res) {
     try{
         const trips = await Trip.find({user: req.user.id})
-        .populate('category')
         .populate('destination')
         .populate('user', 'name')
 

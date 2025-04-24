@@ -18,10 +18,8 @@ const tripsSchema = new mongoose.Schema({
         
     },
     category: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true,
-        trim: true,
-        ref: 'Category'
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
