@@ -16,3 +16,4 @@ router.put("/:id", updateDestination);
 router.delete("/:id", deleteDestination);
 
 module.exports = router;
+//ROUTES
