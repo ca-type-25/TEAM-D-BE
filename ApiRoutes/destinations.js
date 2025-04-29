@@ -6,14 +6,15 @@ const {
   updateDestination,
   deleteDestination,
 } = require("../controllers/destinationController");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
 router.get("/", getDestinations);
 router.get("/:id", getDestinationById);
-router.post("/", createDestination);
-router.put("/:id", updateDestination);
-router.delete("/:id", deleteDestination);
+router.post("/", authMiddleware, createDestination);
+router.put("/:id", authMiddleware, updateDestination);
+router.delete("/:id", authMiddleware, deleteDestination);
 
 module.exports = router;
 //ROUTES
